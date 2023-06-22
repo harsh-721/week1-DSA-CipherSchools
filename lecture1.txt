@@ -1,0 +1,62 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+vector<int> merge(vector<int>& left, vector<int>& right) {
+    vector<int> result;
+    size_t i = 0, j = 0;
+
+    while (i < left.size() && j < right.size()) {
+        if (left[i] <= right[j]) {
+            result.push_back(left[i]);
+            i++;
+        } else {
+            result.push_back(right[j]);
+            j++;
+        }
+    }
+
+    while (i < left.size()) {
+        result.push_back(left[i]);
+        i++;
+    }
+
+    while (j < right.size()) {
+        result.push_back(right[j]);
+        j++;
+    }
+
+    return result;
+}
+
+vector<int> mergeSort(vector<int>& arr) {
+    if (arr.size() <= 1)
+        return arr;
+
+    size_t mid = arr.size() / 2;
+    vector<int> left(arr.begin(), arr.begin() + mid);
+    vector<int> right(arr.begin() + mid, arr.end());
+
+    left = mergeSort(left);
+    right = mergeSort(right);
+
+    return merge(left, right);
+}
+
+int main() {
+    vector<int> vec1 = {9, 5, 7, 2, 4, 1};
+    vector<int> vec2 = {6, 8, 3};
+
+    vector<int> sortedVec1 = mergeSort(vec1);
+    vector<int> sortedVec2 = mergeSort(vec2);
+
+    vector<int> merged = merge(sortedVec1, sortedVec2);
+
+    cout << "Merged and sorted vector: ";
+    for (int num : merged) {
+        cout << num << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
