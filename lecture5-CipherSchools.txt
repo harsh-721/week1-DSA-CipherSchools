@@ -1,24 +1,33 @@
-#include <bits/stdc++.h>
-using namespace std;
-int maxWater(int arr[], int n)
-{
-	int res = 0;
-	for (int i = 1; i < n - 1; i++) {
-		int left = arr[i];
-		for (int j = 0; j < i; j++)
-			left = max(left, arr[j]);
-		int right = arr[i];
-		for (int j = i + 1; j < n; j++)
-			right = max(right, arr[j]);
-		res = res + (min(left, right) - arr[i]);
-	}
+#include <iostream>
+#include <vector>
 
-	return res;
-}
-int main()
-{
-	int arr[] = { 0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1 };
-	int n = sizeof(arr) / sizeof(arr[0]);
-	cout << maxWater(arr, n);
-	return 0;
+int main() {
+    std::vector<int> terrain = {0, 1, 0, 2, 1, 0, 3, 1, 0, 1, 2};
+    int n = terrain.size();
+
+    std::vector<int> leftHighest(n, 0);  
+    std::vector<int> rightHighest(n, 0); 
+
+    int maxLeft = 0, maxRight = 0;
+
+    for (int i = 0; i < n; i++) {
+        leftHighest[i] = maxLeft;
+        maxLeft = std::max(maxLeft, terrain[i]);
+
+        rightHighest[n - i - 1] = maxRight;
+        maxRight = std::max(maxRight, terrain[n - i - 1]);
+    }
+
+    int totalWater = 0;
+
+    for (int i = 0; i < n; i++) {
+        int minHeight = std::min(leftHighest[i], rightHighest[i]);
+        if (minHeight > terrain[i]) {
+            totalWater += minHeight - terrain[i];
+        }
+    }
+
+    std::cout << "Total trapped rainwater: " << totalWater << " units" << std::endl;
+
+    return 0;
 }
