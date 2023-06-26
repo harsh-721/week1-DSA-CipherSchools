@@ -1,0 +1,115 @@
+Q.1: Word Search
+#include <bits/stdc++.h>
+using namespace std;
+int x[] = { -1, -1, -1, 0, 0, 1, 1, 1 };
+int y[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
+bool search2D(char *grid, int row, int col,
+			string word, int R, int C)
+{
+	if (*(grid+row*C+col) != word[0])
+		return false;
+
+	int len = word.length();
+	for (int dir = 0; dir < 8; dir++) {
+		int k, rd = row + x[dir], cd = col + y[dir];
+		for (k = 1; k < len; k++) {
+			if (rd >= R || rd < 0 || cd >= C || cd < 0)
+				break;
+			if (*(grid+rd*C+cd) != word[k])
+				break;
+			rd += x[dir], cd += y[dir];
+		if (k == len)
+			return true;
+	}
+	return false;
+}
+
+void patternSearch(char *grid, string word,
+				int R, int C)
+{
+	for (int row = 0; row < R; row++)
+		for (int col = 0; col < C; col++)
+			if (search2D(grid, row, col, word, R, C))
+				cout << "pattern found at "
+					<< row << ", "
+					<< col << endl;
+}
+int main()
+{
+	int R = 3, C = 13;
+	char grid[R][C] = { "GEEKSFORGEEKS",
+						"GEEKSQUIZGEEK",
+						"IDEQAPRACTICE" };
+
+	patternSearch((char *)grid, "GEEKS", R, C);
+	cout << endl;
+	patternSearch((char *)grid, "EEE", R, C);
+	return 0;
+}
+
+
+Q.2: Power
+#include<bits/stdc++.h>
+using namespace std;
+
+double solve(double x, int n)
+{
+    if(n==0)
+    {
+        return 1;
+    }
+    if(n == 1)
+    {
+        return x;
+    }
+    return x * solve(x, n-1);
+}
+
+double myPow(double x, int n) {
+    
+    if(n>=0) return solve(x, n);
+    else return 1.0/solve(x, abs(n));
+
+}
+
+int main()
+{
+    double x;
+    int n;
+    cout<<"x = ";
+    cin>>x;
+    cout<<"n = ";
+    cin>>n;
+    double ans = myPow(x, n);
+    cout<<"power(x, n) = "<<ans;
+}
+
+Q.3: Powerset
+class Solution {
+public:
+    void solve(vector<int> nums, vector<int> output, int index, vector<vector<int>> &ans )
+    {
+        if(index >= nums.size())
+        {
+            ans.push_back(output);
+            return;
+        }
+        
+        // exclude element
+        solve(nums, output, index+1, ans);
+        
+        // include element
+        int element = nums[index];
+        output.push_back(element);
+        solve(nums, output, index+1, ans);
+    }
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>> ans;
+        vector<int> output;
+        int index = 0;
+        solve(nums, output, index, ans);
+        return ans;
+    }
+};
+    }
+};
