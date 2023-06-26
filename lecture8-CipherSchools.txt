@@ -1,0 +1,196 @@
+Q.1: Generate Parenthesis
+
+#include <bits/stdc++.h>
+using namespace std;
+void generateParenthesis(string &strSoFar, vector<string> & result, int open, int close){
+    if(open < 0 || close < 0 || open > close) {
+        return;
+    } else if(open == 0 && close == 0) {
+        result.push_back(strSoFar);
+        return;
+    } else if(open <= close) {
+        strSoFar.push_back('(');
+        generateParenthesis(strSoFar, result, open-1, close);
+        strSoFar.pop_back();
+        strSoFar.push_back(')');
+        generateParenthesis(strSoFar, result, open, close-1);
+        strSoFar.pop_back();
+
+    }
+}
+vector<string> getParenthesis(const int n)
+
+{
+    vector<string> result;
+    int open = n, close = n;
+    string strSoFar = "";
+    generateParenthesis(strSoFar, result, open, close);
+    return result;
+}
+int main()
+{
+    
+}
+
+Q.2: Phone keypad
+#include <bits/stdc++.h>
+using namespace std;
+void generateParenthesis(string &strSoFar, vector<string> & result, int open, int close){
+    if(open < 0 || close < 0 || open > close) {
+        return;
+    } else if(open == 0 && close == 0) {
+        result.push_back(strSoFar);
+        return;
+    } else if(open <= close) {
+        strSoFar.push_back('(');
+        generateParenthesis(strSoFar, result, open-1, close);
+        strSoFar.pop_back();
+        strSoFar.push_back(')');
+        generateParenthesis(strSoFar, result, open, close-1);
+        strSoFar.pop_back();
+
+    }
+}
+vector<string> getParenthesis(const int n)
+
+{
+    vector<string> result;
+    int open = n, close = n;
+    string strSoFar = "";
+    generateParenthesis(strSoFar, result, open, close);
+    return result;
+}
+int main()
+{
+    
+}
+
+
+Q.3: Permutation
+class Solution {
+public:
+    void solve(vector<int> nums, vector<vector<int>> &ans, int index)
+    {
+        if(index >= nums.size())
+        {
+            ans.push_back(nums);
+            return;
+        }
+
+        for(int i=index; i<nums.size(); i++)
+        {
+            swap(nums[index], nums[i]);
+            solve(nums, ans, index+1);
+            swap(nums[index], nums[i]);
+        }
+    }
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int>> ans;
+        solve(nums, ans, 0);
+        return ans;
+    }
+};
+
+Q.4: Powerset
+#include<bits/stdc++.h>
+using namespace std;
+
+double solve(double x, int n)
+{
+    if(n==0)
+    {
+        return 1;
+    }
+    if(n == 1)
+    {
+        return x;
+    }
+    return x * solve(x, n-1);
+}
+
+double myPow(double x, int n) {
+    
+    if(n>=0) return solve(x, n);
+    else return 1.0/solve(x, abs(n));
+
+}
+
+int main()
+{
+    double x;
+    int n;
+    cout<<"x = ";
+    cin>>x;
+    cout<<"n = ";
+    cin>>n;
+    double ans = myPow(x, n);
+    cout<<"power(x, n) = "<<ans;
+}
+
+Q.5: Rat in a maze
+#include <bits/stdc++.h>
+using namespace std;
+#define N 4
+
+bool solveMazeUtil(int maze[N][N], int x, int y,int sol[N][N]);
+void printSolution(int sol[N][N])
+{
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < N; j++)
+			cout<<" "<<sol[i][j]<<" ";
+		cout<<endl;
+	}
+}
+bool isSafe(int maze[N][N], int x, int y)
+{
+	if (x >= 0 && x < N && y >= 0 && y < N && maze[x][y] == 1)
+		return true;
+	return false;
+}
+bool solveMaze(int maze[N][N])
+{
+	int sol[N][N] = { { 0, 0, 0, 0 },
+					{ 0, 0, 0, 0 },
+					{ 0, 0, 0, 0 },
+					{ 0, 0, 0, 0 } };
+	if (solveMazeUtil(maze, 0, 0, sol) == false) {
+		cout<<"Solution doesn't exist";
+		return false;
+	}
+	printSolution(sol);
+	return true;
+}
+
+bool solveMazeUtil(int maze[N][N], int x, int y, int sol[N][N])
+{
+	if (x == N - 1 && y == N - 1 && maze[x][y] == 1) {
+		sol[x][y] = 1;
+		return true;
+	}
+	if (isSafe(maze, x, y) == true) {
+		if (sol[x][y] == 1)
+			return false;
+		sol[x][y] = 1;
+		if (solveMazeUtil(maze, x + 1, y, sol) == true)
+			return true;
+		if (solveMazeUtil(maze, x - 1, y, sol) == true)
+			return true;
+		if (solveMazeUtil(maze, x, y + 1, sol) == true)
+			return true;
+		if (solveMazeUtil(maze, x, y - 1, sol) == true)
+			return true;
+		sol[x][y] = 0;
+		return false;
+	}
+	return false;
+}
+int main()
+{
+	int maze[N][N] = { { 1, 0, 0, 0 },
+					{ 1, 1, 0, 1 },
+					{ 0, 1, 0, 0 },
+					{ 1, 1, 1, 1 } };
+	solveMaze(maze);
+	return 0;
+}
+
