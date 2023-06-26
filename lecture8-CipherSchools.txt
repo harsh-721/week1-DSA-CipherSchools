@@ -91,7 +91,7 @@ public:
     }
 };
 
-Q.4: Powerset
+Q.4: Power
 #include<bits/stdc++.h>
 using namespace std;
 
