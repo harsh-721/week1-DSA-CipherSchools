@@ -1,0 +1,349 @@
+Q.1: remove duplicates from sorted linked list
+
+#include<bits/stdc++.h>
+using namespace std;
+
+
+struct ListNode {
+     int val;
+     ListNode *next;
+     ListNode() : val(0), next(nullptr) {}
+     ListNode(int x) : val(x), next(nullptr) {}
+     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ };
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        if(head==NULL || head->next == NULL)
+        {
+            return head;
+        }
+        ListNode *temp = head;
+        ListNode *prev = NULL;
+        while(temp!=NULL && temp->next!=NULL)
+        {
+            if(head->val == head->next->val)
+            {
+                int val = head->val;
+                while(head->val == val)
+                {
+                    head = head->next;
+                    if(head == NULL)
+                    {
+                        break;
+                    }
+                }
+                temp = head;
+            }
+            else if(temp->val == temp->next->val)
+            {
+                int val = temp->val;
+                while(temp->val == val && temp!=NULL)
+                {
+                    temp = temp->next;
+                    if(temp==NULL)
+                    {
+                        break;
+                    }
+                    
+                }
+                prev->next = temp;
+            }
+            else
+            {
+                prev = temp;
+                temp = temp->next;
+            }
+        }
+        return head;
+    }
+};
+Q. Add two numbers
+#include<bits/stdc++.h>
+using namespace std;
+
+template <typename T>
+    class Node {
+        public:
+        T data;
+        Node* next;
+
+        Node(T data) {
+            next = NULL;
+            this->data = data;
+        }
+    };
+
+Node<int>* reverse(Node<int>* head)
+{
+    Node<int>* curr = head;
+    Node<int>* prev = NULL;
+    Node<int>* forward = NULL;
+
+    while(curr!=NULL)
+    {
+        forward = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = forward;
+    }
+    return prev;
+}
+void insertAtTail(Node<int>*&head, Node<int> *&tail, int num)
+{
+    Node<int> *newNode = new Node<int>(num);
+    if(head == NULL) 
+    {
+        head = newNode;
+        tail = newNode;
+        return;
+    }
+    tail->next = newNode;
+    tail = newNode;
+    return;
+}
+
+Node<int>* addTwoLists(Node<int>* first, Node<int>* second) {
+    // Write your code here.
+    Node<int>* head1 = reverse(first);
+    Node<int>* head2 = reverse(second);
+    int carry = 0;
+    Node<int> *head = NULL;
+    Node<int> *tail = NULL;
+    while(head1!=NULL && head2!=NULL)
+    {
+        int sum = head1->data + head2->data + carry;
+        if(sum>=10)
+        {
+            int rem = sum%10;
+            carry = 1;
+            insertAtTail(head, tail, rem);
+        }
+        else
+        {
+            insertAtTail(head,tail, sum);
+            carry = 0;
+        }
+        head1 = head1->next;
+        head2 = head2->next;
+    }
+    while(head1!=NULL)
+    {
+        int sum = head1->data + carry;
+        if(sum>=10)
+        {
+            int rem = sum%10;
+            carry = 1;
+            insertAtTail(head, tail, rem);
+        }
+        else
+        {
+            insertAtTail(head, tail, sum);
+            carry = 0;
+        }
+        head1 = head1->next;
+    }
+     while(head2!=NULL)
+    {
+        int sum = head2->data + carry;
+        if(sum>=10)
+        {
+            int rem = sum%10;
+            carry = 1;
+            insertAtTail(head, tail, rem);
+        }
+        else
+        {
+            insertAtTail(head, tail, sum);
+            carry = 0;
+        }
+        head2 = head2->next;
+    }
+    if(carry == 1)
+    {
+        insertAtTail(head, tail, 1);
+    }
+    Node<int> *ans = reverse(head);
+    return ans;
+}
+
+int main()
+{
+
+    return 0;
+}
+
+Q.
+
+Q.2: remove duplicates from linked list
+#include<bits/stdc++.h>
+using namespace std;
+
+
+struct ListNode {
+     int val;
+     ListNode *next;
+     ListNode() : val(0), next(nullptr) {}
+     ListNode(int x) : val(x), next(nullptr) {}
+     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ };
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        if(head==NULL || head->next == NULL)
+        {
+            return head;
+        }
+        ListNode *temp = head;
+        ListNode *prev = NULL;
+        while(temp!=NULL && temp->next!=NULL)
+        {
+            if(head->val == head->next->val)
+            {
+                int val = head->val;
+                while(head->val == val)
+                {
+                    head = head->next;
+                    if(head == NULL)
+                    {
+                        break;
+                    }
+                }
+                temp = head;
+            }
+            else if(temp->val == temp->next->val)
+            {
+                int val = temp->val;
+                while(temp->val == val && temp!=NULL)
+                {
+                    temp = temp->next;
+                    if(temp==NULL)
+                    {
+                        break;
+                    }
+                    
+                }
+                prev->next = temp;
+            }
+            else
+            {
+                prev = temp;
+                temp = temp->next;
+            }
+        }
+        return head;
+    }
+};
+
+Q.3: Middle element in linked list
+
+#include<bits/stdc++.h>
+using namespace std;
+
+ struct ListNode {
+     int val;
+     ListNode *next;
+     ListNode() : val(0), next(nullptr) {}
+     ListNode(int x) : val(x), next(nullptr) {}
+     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ };
+
+class Solution {
+public:
+    ListNode* middleNode(ListNode* head) {
+        ListNode *pro = head;
+        ListNode *nobb = head;
+        while(pro != NULL)
+        {
+            if(pro->next == NULL)
+            {
+                break;
+            }
+            pro = pro->next->next;
+            nobb = nobb->next;
+        }
+        return nobb;
+    }
+};
+
+Q.4: reversed linkedlist
+
+#include<bits/stdc++.h>
+using namespace std;
+
+struct ListNode {
+     int val;
+     ListNode *next;
+     ListNode() : val(0), next(nullptr) {}
+     ListNode(int x) : val(x), next(nullptr) {}
+     ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
+
+class Solution {
+public:
+    // void insertAtStart(ListNode *&head, int val)
+    // {
+    //     ListNode *node = new ListNode(val);
+    //     node->next = head;
+    //     head = node;
+    // }
+    ListNode* reverseList(ListNode* head) {
+
+        // ListNode *temp = head;
+        // ListNode *ans = NULL;
+        // while(temp!=NULL)
+        // {
+        //     insertAtStart(ans, temp->val);
+        //     temp = temp->next;
+        // }
+        // return ans;
+        ListNode *curr = head;
+        ListNode *prev = NULL;
+        
+        while(curr!=NULL)
+        {
+            ListNode *forward = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = forward;
+
+        }
+        return prev;
+    }
+};
+
+Q.5: linked list cycle
+
+#include<bits/stdc++.h>
+using namespace std;
+
+
+struct ListNode {
+     int val;
+     ListNode *next;
+     ListNode(int x) : val(x), next(NULL) {}
+};
+
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        if(head==NULL)
+        {
+            return false;
+        }
+        
+        ListNode *faster = head;
+        ListNode *slower = head;
+        // ListNode *temp = head;
+        while(slower!=NULL && faster!=NULL && faster->next!=NULL)
+        {
+            faster = faster->next->next;
+            slower = slower->next;
+            if(faster == slower)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+};
